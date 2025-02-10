@@ -1,22 +1,12 @@
 /* eslint-disable max-len */
 
 import React from 'react';
-import { Fade } from 'react-awesome-reveal';
-import Lottie from 'react-lottie'; // Import Lottie component
+// import { Fade } from 'react-awesome-reveal';
+import { Player } from '@lottiefiles/react-lottie-player'; // Updated import
 import HeroAnimation from '../assets/images/Lottie/About Us.json'; // Import your Lottie animation file (update the path accordingly)
 // import Button from "../elements/Button";
 
 export default function About() {
-  // Lottie animation options
-  const lottieOptions = {
-    animationData: HeroAnimation, // Path to the Lottie animation file
-    loop: true, // Set to loop the animation
-    autoplay: true, // Start automatically
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice', // Ensures the animation fits properly in its container
-    },
-  };
-
   return (
     <>
       {/* Hero Section (About Us Section) */}
@@ -36,28 +26,26 @@ export default function About() {
             </p>
             <p className="font-light text-lg sm:text-xl text-black-400 leading-relaxed mb-6">
               Whether you are looking to harness the power of AI, build a seamless digital presence,
-              or optimize your business processes, we’ve got you covered.
+              or optimize your business processes, we&apos;ve got you covered.
             </p>
             <p className="font-light text-lg sm:text-xl text-black-400 leading-relaxed mb-6">
               What sets us apart is our commitment to understanding your unique challenges 
               and delivering personalized, scalable solutions that align with your vision. 
               Our team of dedicated professionals combines technical proficiency with creative
-              thinking to craft solutions that not only solve today’s challenges 
+              thinking to craft solutions that not only solve today&apos;s challenges 
               but also future-proof your business for tomorrow.            
             </p>
           </div>
 
           {/* Right Section: Lottie Animation */}
           <div className="lg:w-1/2 flex justify-center items-center mt-8 lg:mt-0">
-            <Fade bottom triggerOnce>
-              <Lottie
-                options={lottieOptions}
-                height={500} // Adjust height for smaller screens
-                width={500} // Adjust width for smaller screens
-                loading="lazy"
-                className="sm:w-96 sm:h-96 lg:w-600 lg:h-600" // Adjust for larger screens
-              />
-            </Fade>
+            <Player
+              src={HeroAnimation}
+              className="player"
+              loop
+              autoplay
+              style={{ width: '100%', height: '100%' }}
+            />
           </div>
         </div>
       </section>
@@ -74,7 +62,7 @@ export default function About() {
 
             <Fade delay={300} triggerOnce>
               <p className="font-light text-lg sm:text-xl text-gray-600 mb-6 sm:mb-8 text-center">
-                We are here to help you take your business to the next level. Don’t wait,
+                We are here to help you take your business to the next level. Don't wait,
                 contact us today to get started!
               </p>
             </Fade>

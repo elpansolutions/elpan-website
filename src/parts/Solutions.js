@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import { Zoom, Fade } from 'react-awesome-reveal'; // Import Fade animation
 import PropTypes from 'prop-types'; // Import PropTypes
-import Button from '../elements/Button';
+import Button from '../elements/Button/index.js';
 
 // Lazy load Lottie to improve performance
 const Card = memo(({ item, index }) => {

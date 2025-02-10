@@ -8,8 +8,8 @@ import { fontFamily as _fontFamily } from 'tailwindcss/defaultTheme';
 // const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-  darkMode: false, // or 'media' or 'class'
+  content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+  darkMode: 'media',
   theme: {
     fontFamily: {
       sans: ['Poppins', ..._fontFamily.sans],
