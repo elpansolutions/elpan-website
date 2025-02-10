@@ -23,18 +23,26 @@ export default function Hero() {
   const navigate = useNavigate();
   const animationRef = useRef(null);
   const [animationProgress, setAnimationProgress] = useState(0);
-  const speed = 75; // Adjust to control animation speed (higher = faster)
+  const speed = 0.0005; // Adjusted for smoother animation
 
   useEffect(() => {
-    const animate = () => {
-      setAnimationProgress((prev) => {
-        if (prev >= 0.95) return 0.95; // Stop just before last frame
-        return prev + speed; // Controlled speed
-      });
+    let frameId;
+    const startTime = performance.now();
+
+    const animate = (timestamp) => {
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / (speed * 1000), 0.95); // Normalize progress
+
+      setAnimationProgress(progress);
+
+      if (progress < 0.95) {
+        frameId = requestAnimationFrame(animate);
+      }
     };
 
-    const intervalId = setInterval(animate, 16); // 16ms per frame (~60fps)
-    return () => clearInterval(intervalId); // Cleanup interval
+    frameId = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(frameId);
   }, []);
 
   const handleNavigation = (path) => {
@@ -46,7 +54,7 @@ export default function Hero() {
       
       {/* Text Section */}
       <div className="w-full lg:w-1/2 mt-2 lg:mt-2">
-        <Fade bottom triggerOnce delay={200}>
+        <Fade bottom triggerOnce delay={300}>
           <h1 className="text-5xl sm:text-5xl text-theme-blue leading-tight mb-5">
             <span className="font-bold text-blue-500">Your Partner in Innovation:</span> <br />
             Where Challenges <br />
@@ -72,7 +80,7 @@ export default function Hero() {
 
       {/* Lottie Animation Section (Right side of the text) */}
       <div className="flex justify-center items-center w-full lg:w-1/2 order-first lg:order-last mt-6 lg:mt-6">
-        <Fade direction="down" triggerOnce delay={200}>
+        <Fade direction="down" triggerOnce delay={450}>
           <Suspense fallback={<div className="h-40 w-40 animate-pulse bg-gray-300 rounded-lg" />}>
             <Lottie
               ref={animationRef}
@@ -85,7 +93,6 @@ export default function Hero() {
           </Suspense>
         </Fade>
       </div>
-
     </section>
   );
 }

@@ -1,3 +1,9 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable import/extensions */
+/* eslint-disable max-len */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable-next-line */
+
 import React, { memo, useEffect, useState } from 'react';
 import { Zoom, Fade } from 'react-awesome-reveal'; // Import Fade animation
 import PropTypes from 'prop-types'; // Import PropTypes
@@ -39,9 +45,8 @@ const Card = memo(({ item, index }) => {
             <div className="relative h-2/3">
               <img
                 src={item.imageUrl}
-                srcSet={`${item.imageUrl} 1x, ${item.imageUrl.replace('.jpg', '@2x.jpg')} 2x, ${item.imageUrl.replace('.jpg', '@3x.jpg')} 3x`}
                 alt="Solutions"
-                decoding="async"
+                loading="lazy"
                 className="rounded-t-xl w-full h-full object-cover"
               />
               <div className="absolute inset-0 opacity-0 bg-black bg-opacity-50 group-hover:opacity-100 transition-opacity duration-300 flex justify-center items-center rounded-t-xl">

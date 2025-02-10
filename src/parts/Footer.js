@@ -114,32 +114,23 @@ export default function Footer() {
               </div>
 
               {/* Contact Us */}
-<div className="w-full sm:w-1/3">
-  <h1 className="text-xl font-bold mb-4">Contact Us</h1>
-  <ul className="space-y-2">
-    <li className="flex items-center">
-      <FaPhone className="mr-2 text-lg" />
-      <Button 
-        type="link" 
-        href="tel:+918903959099" 
-        className="text-base text-gray-300 hover:text-white transition"
-      >
-        +91 89039 59099
-      </Button>
-    </li>
-    <li className="flex items-center">
-      <FaEnvelope className="mr-2 text-lg" />
-      <Button 
-        type="link" 
-        href="mailto:enquiry@elpan.in" 
-        className="text-base text-gray-300 hover:text-white transition"
-      >
-        enquiry@elpan.in
-      </Button>
-    </li>
-  </ul>
-</div>
-
+              <div className="w-full sm:w-1/3">
+                <h1 className="text-xl font-bold mb-4">Contact Us</h1>
+                <ul className="space-y-2">
+                  <li className="flex items-center">
+                    <FaPhone className="mr-2 text-lg" />
+                    <Button type="link" href="tel:+918903959099" className="text-base text-gray-300 hover:text-white transition">
+                      +91 89039 59099
+                    </Button>
+                  </li>
+                  <li className="flex items-center">
+                    <FaEnvelope className="mr-2 text-lg" />
+                    <Button type="link" href="mailto:enquiry@elpan.in" className="text-base text-gray-300 hover:text-white transition">
+                      enquiry@elpan.in
+                    </Button>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
 

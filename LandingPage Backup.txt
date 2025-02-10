@@ -2,14 +2,15 @@
 /* eslint-disable-next-line */
 
 // Solution Img Imports
-import MobileApp from '../assets/images/Solutions/SVGs/MobileApp.svg';
-import Ai from '../assets/images/Solutions/SVGs/AI.svg';
-import ERP from '../assets/images/Solutions/SVGs/ERP.svg';
-import Marketing from '../assets/images/Solutions/SVGs/DM.svg';
-import tech from '../assets/images/Solutions/SVGs/Tech.svg';
-import website from '../assets/images/Solutions/SVGs/Web.svg';
-import WhatsappAutomation from '../assets/images/Solutions/SVGs/WA.svg';
-import ChatBot from '../assets/images/Solutions/SVGs/Chatbot.svg';
+
+import MobileApp from '../assets/images/Solutions/New/Mobile App.svg';
+import Ai from '../assets/images/Solutions/New/AI.svg';
+import ERP from '../assets/images/Solutions/New/ERP.svg';
+import Marketing from '../assets/images/Solutions/New/DM.svg';
+import tech from '../assets/images/Solutions/New/Tech.svg';
+import website from '../assets/images/Solutions/New/Web.svg';
+import WhatsappAutomation from '../assets/images/Solutions/New/WA.svg';
+import ChatBot from '../assets/images/Solutions/New/Chatbot.svg';
 
 // Why Us
 import Communicative from '../assets/images/Advantages/Communicative.png';
@@ -22,7 +23,7 @@ export const Solutions = [
     id: 'AI_Services',
     title: 'AI Services',
     imageUrl: Ai,
-    type: '❝ Unlock the Power of Artificial Intelligence for Your Business ❞',
+    type: 'Unlock the Power of Artificial Intelligence for Your Business',
     detail: [
       'AI is reshaping industries, and Elpan Solutions is at the forefront of this revolution.',
       'From predictive analytics to natural language processing, we offer AI-driven solutions.',
@@ -42,7 +43,7 @@ export const Solutions = [
     id: 'Website_Development',
     title: 'Website Development',
     imageUrl: website,
-    type: '❝ Crafting Websites That Make an Impact ❞',
+    type: 'Crafting Websites That Make an Impact',
     detail: [
       'Your website is your digital storefront, and we ensure it stands out. At Elpan Solutions,',
       'we design and develop websites that are visually appealing,',
@@ -63,7 +64,7 @@ export const Solutions = [
     id: 'Mobile_App_Development',
     title: 'Mobile App Development',
     imageUrl: MobileApp,
-    type: '❝ Bringing Your Ideas to Life on Mobile ❞',
+    type: 'Bringing Your Ideas to Life on Mobile',
     detail: [
       'We create intuitive, feature-rich mobile applications for iOS and Android that captivate users',
       'and deliver exceptional performance. Whether it’s a consumer app or an enterprise solution,',
@@ -80,7 +81,7 @@ export const Solutions = [
     id: 'Digital_Marketing',
     title: 'Digital Marketing',
     imageUrl: Marketing,
-    type: '❝ Elevate Your Online Presence with Digital Marketing ❞',
+    type: 'Elevate Your Online Presence with Digital Marketing',
     detail: [
       'In today’s digital age, visibility is everything. Our digital marketing strategies are designed to',
       'increase your reach, drive traffic, and convert visitors into loyal customers.',
@@ -97,7 +98,7 @@ export const Solutions = [
     id: 'ERP_Solutions', // Updated to ensure uniqueness
     title: 'ERP Solutions',
     imageUrl: ERP,
-    type: '❝ Streamline Your Business Operations with ERP ❞',
+    type: 'Streamline Your Business Operations with ERP',
     detail: [
       'Our ERP solutions help businesses integrate and manage their core processes seamlessly.',
       'From inventory to finance, we provide robust, scalable systems tailored to your needs.',
@@ -117,7 +118,7 @@ export const Solutions = [
     id: 'ChatBot_Development', // Updated to ensure uniqueness
     title: 'ChatBot Development',
     imageUrl: ChatBot,
-    type: '❝ Enhance Customer Engagement with Intelligent Chatbots ❞',
+    type: 'Enhance Customer Engagement with Intelligent Chatbots',
     detail: [
       'Wedesign AI-driven chatbots that deliver seamless customer support, boost engagement, and',
       'improve user satisfaction.',
@@ -134,7 +135,7 @@ export const Solutions = [
     id: 'WhatsApp_Automation', // Updated to ensure uniqueness
     title: 'WhatsApp Automation',
     imageUrl: WhatsappAutomation,
-    type: '❝ Streamline Communication with WhatsApp Automation ❞',
+    type: 'Streamline Communication with WhatsApp Automation',
     detail: [
       'Take your customer engagement to the next level with WhatsApp automation. Automate',
       'responses, manage queries, and provide instant support through the world’s most popular',
@@ -153,7 +154,7 @@ export const Solutions = [
     id: 'Tech_Consulting', // Updated to ensure uniqueness
     title: 'Tech Consulting',
     imageUrl: tech,
-    type: '❝ Expert Tech Consulting for Smarter Business Decisions ❞',
+    type: 'Expert Tech Consulting for Smarter Business Decisions',
     detail: [
       'Leverage our technical expertise to navigate complex challenges and make informed decisions.',
       'From IT strategy to software implementation, we guide you every step of the way.',

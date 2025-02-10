@@ -77,18 +77,18 @@ export default function SolutionDetail({ data }) {
             <h1 className="text-4xl sm:text-5xl text-theme-blue font-extrabold text-center">
               {item.title}
             </h1>
-            <p className="text-black text-center text-lg font-light mt-2">{item.type}</p>
+            {/* <p className="text-black text-center text-lg font-light mt-2">{item.type}</p> */}
           </Fade>
 
           <Fade bottom delay={300} triggerOnce>
             <div className="flex flex-col lg:flex-row items-center mt-6 gap-12">
               {/* Project Details on Left Side */}
               <div className="lg:w-1/2 px-6 lg:px-12">
-                <h2 className="text-3xl text-theme-blue font-extrabold mb-6">Project Detail</h2>
+              <h2 className="text-3xl text-theme-blue font-extrabold mb-6">{item.type} </h2>
                 <p className="text-gray-600 text-lg leading-relaxed font-light mb-6">{item.detail}</p>
 
                 <div className="mt-10">
-                  <h2 className="text-3xl text-theme-blue font-extrabold mb-6">Project Responsibilities</h2>
+                  <h2 className="text-3xl text-theme-blue font-extrabold mb-6">Our Expertise Includes:</h2>
                   <ul className="list-disc pl-5 text-gray-600 font-light">
                     {item.responsibility.map((responsibility) => (
                       <li key={responsibility} className="mb-3">

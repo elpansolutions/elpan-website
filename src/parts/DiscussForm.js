@@ -133,13 +133,19 @@ export const DiscussForm = (actions) => {
       <div className="flex flex-col sm:flex-row items-center justify-center mt-8 gap-4">
         <div className="flex items-center">
           <FaPhone className="mr-2 text-lg" />
-          <Button type="link" href="#" className="text-base text-black hover:text-gray-700 transition">
+          <Button type="link" href="tel:+918903959099" className="text-base text-black hover:text-gray-700 transition">
             +91 89039 59099
           </Button>
         </div>
         <div className="flex items-center">
+          <FaPhone className="mr-2 text-lg" />
+          <Button type="link" href="tel:+919789404593" className="text-base text-black hover:text-gray-700 transition">
+            +91 97894 04593
+          </Button>
+        </div>
+        <div className="flex items-center">
           <FaEnvelope className="mr-2 text-lg" />
-          <Button type="link" href="#" className="text-base text-black hover:text-gray-700 transition">
+          <Button type="link" href="mailto:enquiry@elpan.in" className="text-base text-black hover:text-gray-700 transition">
             enquiry@elpan.in
           </Button>
         </div>
