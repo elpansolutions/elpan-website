@@ -34,7 +34,13 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "docker:build": "docker build -t elpan-website .",
+    "docker:run": "docker run -d -p 80:80 -p 443:443 --name elpan-website elpan-website",
+    "docker:start": "docker start elpan-website",
+    "docker:stop": "docker stop elpan-website",
+    "docker:restart": "docker restart elpan-website",
+    "docker:logs": "docker logs -f elpan-website"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.19",
