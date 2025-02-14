@@ -17,7 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { Form } from 'elements/Form';
 import Button from 'elements/Button';
-import { FaPhone, FaEnvelope } from 'react-icons/fa';
+import { FaPhoneAlt, FaEnvelope } from 'react-icons/fa';
 
 export const DiscussForm = (actions) => {
   const { data, resetForm } = actions;
@@ -132,13 +132,13 @@ export const DiscussForm = (actions) => {
       {/* Contact Information */}
       <div className="flex flex-col sm:flex-row items-center justify-center mt-8 gap-4">
         <div className="flex items-center">
-          <FaPhone className="mr-2 text-lg" />
+          <FaPhoneAlt className="mr-2 text-lg" />
           <Button type="link" href="tel:+918903959099" className="text-base text-black hover:text-gray-700 transition">
             +91 89039 59099
           </Button>
         </div>
         <div className="flex items-center">
-          <FaPhone className="mr-2 text-lg" />
+          <FaPhoneAlt className="mr-2 text-lg" />
           <Button type="link" href="tel:+919789404593" className="text-base text-black hover:text-gray-700 transition">
             +91 97894 04593
           </Button>
@@ -146,7 +146,7 @@ export const DiscussForm = (actions) => {
         <div className="flex items-center">
           <FaEnvelope className="mr-2 text-lg" />
           <Button type="link" href="mailto:enquiry@elpan.in" className="text-base text-black hover:text-gray-700 transition">
-            enquiry@elpan.in
+            enquire@elpan.in
           </Button>
         </div>
       </div>

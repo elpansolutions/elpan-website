@@ -10,15 +10,15 @@ export default function About() {
   return (
     <>
       {/* Hero Section (About Us Section) */}
-      <section className="hero py-8 sm:py-16 md:py-20 mt-10 sm:mt-10 lg:mt-18 flex flex-col lg:flex-row items-center mb-[-4rem]">
+      <section className="hero py-8 sm:py-16 md:py-20 mt-10 sm:mt-10 lg:mt-18 flex flex-col lg:flex-row items-center mb-[-6rem]">
         <div className="container mx-auto flex flex-col lg:flex-row items-center px-6 sm:px-12">
           {/* Left Section: Text Content */}
           <div className="w-full max-w-3xl text-center lg:text-left mb-16 lg:mb-0">
             <h1 className="text-4xl sm:text-5xl text-theme-blue font-extrabold leading-tight mb-6">
-              About Us
+              About Elpan Solutions
             </h1>
             <p className="font-light text-lg sm:text-xl text-black-400 leading-relaxed mb-4">
-              We are Elpan Solutions!
+              We are Elpan Solutions - Your Digital Transformation Partner
             </p>
             <p className="font-light text-lg sm:text-xl text-black-400 leading-relaxed mb-4">
               We are a team of passionate tech enthusiasts committed to providing world-class
@@ -44,7 +44,7 @@ export default function About() {
               className="player"
               loop
               autoplay
-              style={{ width: '100%', height: '100%' }}
+              style={{ width: '85%', height: '85%' }}
             />
           </div>
         </div>

@@ -6,7 +6,7 @@
 import React, { useState } from "react";
 import { Transition } from "@headlessui/react";
 import { useNavigate, useLocation } from "react-router-dom";
-import logo from "../assets/images/ELPAN SOLUTIONS.png";
+import logo from "../assets/images/Logo/ELPAN SOLUTIONS.png";
 import Button from "../elements/Button";
 
 export default function Header() {
@@ -18,6 +18,7 @@ export default function Header() {
     { label: "Home", path: "/" },
     { label: "About", path: "/about" },
     { label: "Solutions", path: "/solutions" },
+    { label: "Careers", path: "/Careers" },
     { label: "Contact Us", path: "/contact us" },
   ];
 

@@ -7,9 +7,9 @@ import {
   FaTwitter, 
   FaInstagram, 
   FaLinkedin, 
-  FaGithub, 
-  FaPhone, 
+  FaGithub,  
   FaEnvelope,
+  FaPhoneAlt,
 } from 'react-icons/fa';
 import BrandIcon from './BrandIcon';
 import Button from '../elements/Button';
@@ -43,16 +43,16 @@ export default function Footer() {
                 <BrandIcon className="w-20 h-20 sm:w-24 sm:h-24" />
                 {/* Social Icons */}
                 <div className="flex items-center justify-center gap-6">
-                  <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="hover:scale-110 transition">
+                  <a href="https://x.com/Elpan_Solutions" target="_blank" rel="noopener noreferrer" aria-label="X" className="hover:scale-110 transition">
                     <FaTwitter className="text-white hover:text-gray-400" size={24} />
                   </a>
-                  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:scale-110 transition">
+                  <a href="https://instagram.com/elpan_solutions/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:scale-110 transition">
                     <FaInstagram className="text-white hover:text-gray-400" size={24} />
                   </a>
-                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:scale-110 transition">
+                  <a href="https://linkedin.com/company/elpan-solutions/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:scale-110 transition">
                     <FaLinkedin className="text-white hover:text-gray-400" size={24} />
                   </a>
-                  <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="hover:scale-110 transition">
+                  <a href="https://github.com/Elpan-Solutions" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="hover:scale-110 transition">
                     <FaGithub className="text-white hover:text-gray-400" size={24} />
                   </a>
                 </div>
@@ -86,7 +86,7 @@ export default function Footer() {
                   <li>
                     <Button
                       type="link"
-                      href={`${window.location.origin}/careers`}
+                      href={`${window.location.origin}/Careers`}
                       className="text-base text-gray-300 hover:text-white transition"
                     >
                       Careers
@@ -118,7 +118,7 @@ export default function Footer() {
                 <h1 className="text-xl font-bold mb-4">Contact Us</h1>
                 <ul className="space-y-2">
                   <li className="flex items-center">
-                    <FaPhone className="mr-2 text-lg" />
+                    <FaPhoneAlt className="mr-2 text-lg" />
                     <Button type="link" href="tel:+918903959099" className="text-base text-gray-300 hover:text-white transition">
                       +91 89039 59099
                     </Button>
@@ -126,7 +126,7 @@ export default function Footer() {
                   <li className="flex items-center">
                     <FaEnvelope className="mr-2 text-lg" />
                     <Button type="link" href="mailto:enquiry@elpan.in" className="text-base text-gray-300 hover:text-white transition">
-                      enquiry@elpan.in
+                    enquire@elpan.in
                     </Button>
                   </li>
                 </ul>
