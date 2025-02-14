@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "/static/css/main.023a6d47.css",
+    "main.js": "/static/js/main.46faebd2.js",
+    "static/js/97.6a9330a1.chunk.js": "/static/js/97.6a9330a1.chunk.js",
+    "static/js/453.2cacede0.chunk.js": "/static/js/453.2cacede0.chunk.js",
+    "static/media/Web.svg": "/static/media/Web.79f259cc31411ea0338c63b18244144f.svg",
+    "static/media/AI.svg": "/static/media/AI.bd820a77f949f287bd0b605df4d790a4.svg",
+    "static/media/WA.svg": "/static/media/WA.f4ff00e4406cd08023e570420f01c93c.svg",
+    "static/media/MobileApp.svg": "/static/media/MobileApp.56e2c42da68d70230828e0f92d5f69bc.svg",
+    "static/media/ERP.svg": "/static/media/ERP.ad8fa812f51e228e2c7a618e2d4221bf.svg",
+    "static/media/DM.svg": "/static/media/DM.eadbcfd807ce1980e08a723bbfba2117.svg",
+    "static/media/Tech.svg": "/static/media/Tech.abe3fb20003ac4236af2496663eaaadd.svg",
+    "static/media/Chatbot.svg": "/static/media/Chatbot.421a671a983b84939bc1f84b3a24d888.svg",
+    "static/media/NotFound.png": "/static/media/NotFound.67759b4097c5294d1ab9.png",
+    "static/media/Management.png": "/static/media/Management.323b1fec36c45ff45ef7.png",
+    "static/media/Collaborative.png": "/static/media/Collaborative.2f9892ac98e9b787a975.png",
+    "static/media/Communicative.png": "/static/media/Communicative.eba258160f4e17106ad0.png",
+    "static/media/Favorite.png": "/static/media/Favorite.cb968fa8bc7d31037eb0.png",
+    "static/media/ELPAN SOLUTIONS.png": "/static/media/ELPAN SOLUTIONS.d6d46c97690ebd3c6fd6.png",
+    "index.html": "/index.html",
+    "main.023a6d47.css.map": "/static/css/main.023a6d47.css.map",
+    "main.46faebd2.js.map": "/static/js/main.46faebd2.js.map",
+    "97.6a9330a1.chunk.js.map": "/static/js/97.6a9330a1.chunk.js.map",
+    "453.2cacede0.chunk.js.map": "/static/js/453.2cacede0.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.023a6d47.css",
+    "static/js/main.46faebd2.js"
+  ]
+}
