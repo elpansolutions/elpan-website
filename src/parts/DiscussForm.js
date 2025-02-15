@@ -5,54 +5,71 @@
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState } from "react";
 
-import { Fade } from 'react-awesome-reveal';
+import { Fade } from "react-awesome-reveal";
 // eslint-disable-next-line import/no-extraneous-dependencies
-import * as emailjs from '@emailjs/browser';
+import { ToastContainer, toast } from "react-toastify";
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { ToastContainer, toast } from 'react-toastify';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
-import { Form } from 'elements/Form';
-import Button from 'elements/Button';
-import { FaPhoneAlt, FaEnvelope } from 'react-icons/fa';
+import { Form } from "elements/Form";
+import Button from "elements/Button";
+import { FaPhoneAlt, FaEnvelope } from "react-icons/fa";
+
+// API endpoint configuration
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
 
 export const DiscussForm = (actions) => {
   const { data, resetForm } = actions;
-  const submitEmail = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const submitForm = async () => {
     const {
       name, company, email, phone, projectIdea,
     } = data;
 
-    const templateParams = {
-      from_name: `${name} - ${company} ( ${phone} - ${email} )`,
-      to_name: 'ELPAN Solutions',
-      message: projectIdea,
-    };
-
     if (
-      name !== ''
-      && company !== ''
-      && email !== ''
-      && phone !== ''
-      && projectIdea !== ''
+      name !== ""
+      && company !== ""
+      && email !== ""
+      && phone !== ""
+      && projectIdea !== ""
     ) {
-      emailjs.send(
-        'service_h4gtndg',
-        'template_a9tvs7a',
-        templateParams,
-        'user_csqIxzN5mKsl1yw4ffJzV',
-      )
-        .then(() => {
-          toast.success("Success! We'll get back to you soon. Thank you!");
-          resetForm();
-        }, (error) => {
-          toast.error(error);
+      try {
+        setIsSubmitting(true);
+        toast.info("Sending your request...", { autoClose: false });
+
+        const response = await fetch(`${API_URL}/api/send-email`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            company,
+            email,
+            phone,
+            projectIdea,
+          }),
         });
+
+        toast.dismiss(); // Remove the sending toast
+
+        if (!response.ok) {
+          throw new Error("Failed to send email");
+        }
+
+        toast.success("Success! We'll get back to you soon. Thank you!");
+        resetForm();
+      } catch (error) {
+        console.error("Error sending email:", error);
+        toast.error("Failed to send email. Please try again later.");
+      } finally {
+        setIsSubmitting(false);
+      }
     } else {
-      toast.error('Please fill out the blank form.');
+      toast.error("Please fill out the blank form.");
     }
   };
 
@@ -79,6 +96,7 @@ export const DiscussForm = (actions) => {
               value={data.name}
               placeholder="Your name"
               onChange={actions.onChange}
+              disabled={isSubmitting}
             />
             <Form
               id="company"
@@ -87,6 +105,7 @@ export const DiscussForm = (actions) => {
               value={data.company}
               placeholder="Your company"
               onChange={actions.onChange}
+              disabled={isSubmitting}
             />
           </div>
 
@@ -98,6 +117,7 @@ export const DiscussForm = (actions) => {
               value={data.email}
               placeholder="Your email address"
               onChange={actions.onChange}
+              disabled={isSubmitting}
             />
             <Form
               id="phone"
@@ -106,6 +126,7 @@ export const DiscussForm = (actions) => {
               value={data.phone}
               placeholder="Your contact number"
               onChange={actions.onChange}
+              disabled={isSubmitting}
             />
           </div>
 
@@ -117,14 +138,18 @@ export const DiscussForm = (actions) => {
               value={data.projectIdea}
               placeholder="Explain about your project idea"
               onChange={actions.onChange}
+              disabled={isSubmitting}
             />
           </div>
           <Button
-            className="flex bg-theme-blue text-white text-xl sm:text-lg tracking-wider items-center justify-center w-40 h-12 p-4 border-2 border-theme-blue shadow-xl rounded-full transform transition duration-500 hover:bg-white hover:text-theme-blue hover:scale-105 mx-auto"
+            className={`flex bg-theme-blue text-white text-xl sm:text-lg tracking-wider items-center justify-center w-40 h-12 p-4 border-2 border-theme-blue shadow-xl rounded-full transform transition duration-500 hover:bg-white hover:text-theme-blue hover:scale-105 mx-auto ${
+              isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+            }`}
             type="button"
-            onClick={submitEmail}
+            onClick={submitForm}
+            disabled={isSubmitting}
           >
-            SUBMIT
+            {isSubmitting ? "SENDING..." : "SUBMIT"}
           </Button>
         </div>
       </Fade>

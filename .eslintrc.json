@@ -2,7 +2,8 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "node": true
   },
   "extends": ["eslint:recommended", "plugin:react/recommended", "airbnb"],
   "parserOptions": {
@@ -14,6 +15,7 @@
   },
   "plugins": ["react"],
   "rules": {
+    "quotes": "off",
     "arrow-body-style": "off",
     "semi": ["error", "always"],
     "react/jsx-filename-extension": [
@@ -38,7 +40,16 @@
     "react/jsx-indent": "off",
     "react/jsx-props-no-multi-spaces": "off",
     "react/jsx-closing-tag-location": "off",
-    "quotes": "off",
-    "react/jsx-one-expression-per-line": "off"
-  }
+    "react/jsx-one-expression-per-line": "off",
+    "linebreak-style": "off",
+    "eol-last": "off"
+  },
+  "overrides": [
+    {
+      "files": ["server/**/*.js"],
+      "rules": {
+        "linebreak-style": 0
+      }
+    }
+  ]
 }

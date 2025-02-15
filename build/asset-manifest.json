@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.023a6d47.css",
-    "main.js": "/static/js/main.46faebd2.js",
+    "main.css": "/static/css/main.7363b2df.css",
+    "main.js": "/static/js/main.8c46d2ea.js",
     "static/js/97.6a9330a1.chunk.js": "/static/js/97.6a9330a1.chunk.js",
     "static/js/453.2cacede0.chunk.js": "/static/js/453.2cacede0.chunk.js",
     "static/media/Web.svg": "/static/media/Web.79f259cc31411ea0338c63b18244144f.svg",
@@ -19,13 +19,13 @@
     "static/media/Favorite.png": "/static/media/Favorite.cb968fa8bc7d31037eb0.png",
     "static/media/ELPAN SOLUTIONS.png": "/static/media/ELPAN SOLUTIONS.d6d46c97690ebd3c6fd6.png",
     "index.html": "/index.html",
-    "main.023a6d47.css.map": "/static/css/main.023a6d47.css.map",
-    "main.46faebd2.js.map": "/static/js/main.46faebd2.js.map",
+    "main.7363b2df.css.map": "/static/css/main.7363b2df.css.map",
+    "main.8c46d2ea.js.map": "/static/js/main.8c46d2ea.js.map",
     "97.6a9330a1.chunk.js.map": "/static/js/97.6a9330a1.chunk.js.map",
     "453.2cacede0.chunk.js.map": "/static/js/453.2cacede0.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.023a6d47.css",
-    "static/js/main.46faebd2.js"
+    "static/css/main.7363b2df.css",
+    "static/js/main.8c46d2ea.js"
   ]
 }
