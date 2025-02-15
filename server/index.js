@@ -18,19 +18,38 @@ require("dotenv").config();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: function(origin, callback) {
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'http://localhost:80',
+      'http://localhost',
+      'https://elpan.in',
+      'https://www.elpan.in',
+      'http://elpan.in',
+      'http://www.elpan.in'
+    ];
+    console.log("Request origin:", origin); // Log the request origin for debugging
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.error(`Origin ${origin} not allowed by CORS`);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
 app.use(express.json());
 
-// Read and encode logo image
-const logoPath = path.join(__dirname, "../src/assets/images/Logo/ELPAN SOLUTIONS.png");
-const logoBase64 = fs.readFileSync(logoPath).toString("base64");
+// Add OPTIONS handler
+app.options('/api/contact-form', cors());
 
 // Email signature template
 const emailSignature = `
   <div style="margin-top: 20px; border-top: 2px solid #2c5282; padding-top: 20px;">
-    <div style="text-align: center; margin-bottom: 15px;">
-      <img src="data:image/png;base64,${logoBase64}" alt="ELPAN Solutions" style="width: 200px; height: auto;">
-    </div>
     <p style="margin: 0; text-align: center;"><strong style="color: #2c5282;">ELPAN Solutions</strong></p>
     <p style="margin: 5px 0; text-align: center;">Where Challenges meet Solutions</p>
     <div style="margin-top: 10px; text-align: center;">
@@ -48,21 +67,20 @@ const emailSignature = `
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 587,
-  secure: false, // Use TLS
+  secure: false,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASSWORD,
   },
   tls: {
-    rejectUnauthorized: false // Accept self-signed certificates
+    rejectUnauthorized: false
   }
 });
 
 // Verify transporter connection
-transporter.verify((error, success) => {
+transporter.verify(function(error, success) {
   if (error) {
     console.error("SMTP connection error:", error);
-    console.log("Please check your email credentials and internet connection");
   } else {
     console.log("SMTP server is ready to send emails");
   }
@@ -73,7 +91,9 @@ transporter.verify((error, success) => {
  * @param {express.Request} req - Express request object
  * @param {express.Response} res - Express response object
  */
-app.post("/api/send-email", async (req, res) => {
+app.post("/api/contact-form", async (req, res) => {
+  console.log("Received email request:", req.body);
+  
   try {
     const {
       name,
@@ -82,6 +102,8 @@ app.post("/api/send-email", async (req, res) => {
       phone,
       projectIdea,
     } = req.body;
+
+    console.log("Preparing to send emails...");
 
     // Validate required fields
     if (!name || !company || !email || !phone || !projectIdea) {
@@ -96,7 +118,7 @@ app.post("/api/send-email", async (req, res) => {
 
     // Email to user
     const userMailOptions = {
-      from: `ELPAN Solutions <${process.env.EMAIL_USER}>`,
+      from: process.env.EMAIL_USER,
       to: email,
       subject: "Thank you for contacting ELPAN Solutions",
       html: `
@@ -116,7 +138,7 @@ app.post("/api/send-email", async (req, res) => {
 
     // Email to admin
     const adminMailOptions = {
-      from: `ELPAN Solutions <${process.env.EMAIL_USER}>`,
+      from: process.env.EMAIL_USER,
       to: process.env.ADMIN_EMAIL,
       subject: `New Project Inquiry from ${name} - ${company}`,
       html: `
@@ -132,33 +154,29 @@ app.post("/api/send-email", async (req, res) => {
       `,
     };
 
-    // Send emails with individual error handling
-    const [userEmailResult, adminEmailResult] = await Promise.allSettled([
-      transporter.sendMail(userMailOptions),
-      transporter.sendMail(adminMailOptions),
-    ]);
+    console.log("Sending emails...");
 
-    // Check for partial failures
-    if (userEmailResult.status === "rejected" && adminEmailResult.status === "rejected") {
-      throw new Error("Failed to send both emails");
+    // Send emails with better error handling
+    try {
+      await Promise.all([
+        transporter.sendMail(userMailOptions),
+        transporter.sendMail(adminMailOptions),
+      ]);
+      console.log("Emails sent successfully");
+      res.status(200).json({ message: "Emails sent successfully" });
+    } catch (emailError) {
+      console.error("Error sending emails:", emailError);
+      res.status(500).json({ error: "Failed to send emails", details: emailError.message });
     }
-
-    if (userEmailResult.status === "rejected") {
-      console.error("Failed to send user email:", userEmailResult.reason);
-      return res.status(500).json({ error: "Failed to send confirmation email" });
-    }
-
-    if (adminEmailResult.status === "rejected") {
-      console.error("Failed to send admin email:", adminEmailResult.reason);
-      // Still return success to user since they got their confirmation
-      return res.status(200).json({ message: "Request received successfully" });
-    }
-
-    res.status(200).json({ message: "Emails sent successfully" });
   } catch (error) {
-    console.error("Error sending emails:", error);
-    res.status(500).json({ error: "Failed to process your request" });
+    console.error("Server error:", error);
+    res.status(500).json({ error: "Server error", details: error.message });
   }
+});
+
+// Add health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'healthy' });
 });
 
 const PORT = process.env.PORT || 3001;

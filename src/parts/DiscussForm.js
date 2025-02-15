@@ -17,8 +17,13 @@ import { Form } from "elements/Form";
 import Button from "elements/Button";
 import { FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 
-// API endpoint configuration
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
+// Update the API URL configuration
+const API_URL = window.location.hostname === "localhost" 
+  ? "http://localhost:3001/api"
+  : `${window.location.origin}/api`;
+
+// Change the endpoint name to match backend
+const CONTACT_ENDPOINT = "contact-form";
 
 export const DiscussForm = (actions) => {
   const { data, resetForm } = actions;
@@ -40,7 +45,9 @@ export const DiscussForm = (actions) => {
         setIsSubmitting(true);
         toast.info("Sending your request...", { autoClose: false });
 
-        const response = await fetch(`${API_URL}/api/send-email`, {
+        console.log("Sending request to:", `${API_URL}/${CONTACT_ENDPOINT}`);
+
+        const response = await fetch(`${API_URL}/${CONTACT_ENDPOINT}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -54,22 +61,23 @@ export const DiscussForm = (actions) => {
           }),
         });
 
-        toast.dismiss(); // Remove the sending toast
+        toast.dismiss();
 
         if (!response.ok) {
-          throw new Error("Failed to send email");
+          const errorData = await response.json();
+          throw new Error(errorData.error || "Failed to send email");
         }
 
         toast.success("Success! We'll get back to you soon. Thank you!");
         resetForm();
       } catch (error) {
         console.error("Error sending email:", error);
-        toast.error("Failed to send email. Please try again later.");
+        toast.error(error.message || "Failed to send email. Please try again later.");
       } finally {
         setIsSubmitting(false);
       }
     } else {
-      toast.error("Please fill out the blank form.");
+      toast.error("Please fill out all fields.");
     }
   };
 

@@ -1,259 +1,230 @@
-# Elpan Website - Production Deployment Guide
+# ELPAN Solutions Website
 
-## Overview
-This guide provides detailed instructions for deploying and managing the Elpan website in a production environment using Docker, Nginx, and Let's Encrypt SSL.
+This repository contains the source code for the ELPAN Solutions website, a React-based frontend with a Node.js backend for handling contact form submissions.
 
 ## Table of Contents
-- [Prerequisites](#prerequisites)
 - [Project Structure](#project-structure)
-- [Initial Setup](#initial-setup)
-- [Deployment](#deployment)
-- [SSL Management](#ssl-management)
-- [Maintenance](#maintenance)
+- [Prerequisites](#prerequisites)
+- [Docker Deployment](#docker-deployment)
+- [Direct Server Deployment](#direct-server-deployment)
+- [Environment Variables](#environment-variables)
+- [Common Operations](#common-operations)
 - [Troubleshooting](#troubleshooting)
-- [Security Best Practices](#security-best-practices)
+
+## Project Structure
+```
+elpan-website/
+├── src/               # React frontend source code
+├── server/            # Node.js backend code
+├── public/            # Static assets
+├── nginx.conf        # Nginx configuration
+├── docker-compose.yml # Docker compose configuration
+├── frontend.Dockerfile # Frontend container configuration
+└── backend.Dockerfile  # Backend container configuration
+```
 
 ## Prerequisites
-- Rocky Linux server
-- Docker installed
-- Domain name with DNS configured
-- Ports 80 and 443 open in firewall
-- Git installed
+- Node.js v16 or higher
+- npm v8 or higher
+- Docker and Docker Compose (for containerized deployment)
+- Nginx (for direct server deployment)
+- SSL certificates (for HTTPS)
 
-## Project Structure 
-elpan-website/
-├── Dockerfile # Multi-stage Docker build file
-├── nginx.conf # Nginx configuration
-├── ssl-renew.sh # SSL certificate renewal script
-├── start.sh # Container startup script
-├── src/ # React application source
-└── README.md # This documentation
+## Docker Deployment
 
-Install Docker on Rocky Linux
-sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
-sudo dnf install docker-ce docker-ce-cli containerd.io
-sudo systemctl start docker
-sudo systemctl enable docker
-
-Open required ports
-sudo firewall-cmd --permanent --add-service=http
-sudo firewall-cmd --permanent --add-service=https
-sudo firewall-cmd --reload
-
-### 2. Configuration Files Setup
-Before deployment, update the following files with your domain and email:
-
-1. In `nginx.conf`:
-```nginx
-server_name your-domain.com;  # Replace with your domain
-```
-
-2. In `start.sh`:
-```bash
---email your-email@example.com \  # Replace with your email
--d your-domain.com               # Replace with your domain
-```
-
-## Deployment
-
-### First-time Deployment
-
+### Initial Setup
 1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-org/elpan-website.git
+   cd elpan-website
+   ```
+
+2. Create environment file:
+   ```bash
+   cp server/.env.example server/.env
+   # Edit .env with your email credentials and other settings
+   ```
+
+3. Start the containers:
+   ```bash
+   sudo docker compose up --build -d
+   ```
+
+### Docker Commands Reference
+
+#### Basic Operations
 ```bash
-git clone <repository-url>
-cd elpan-website
-```
+# Start containers
+sudo docker compose up -d
 
-2. Build and deploy:
-```bash
-# Build Docker image
-docker build -t elpan-website:latest .
+# Stop containers
+sudo docker compose down
 
-# Create persistent volume for SSL certificates
-docker volume create letsencrypt
-
-# Run container
-docker run -d \
-  --name elpan-website \
-  -p 80:80 \
-  -p 443:443 \
-  -v letsencrypt:/etc/letsencrypt \
-  --restart unless-stopped \
-  elpan-website:latest
-```
-
-### Updating the Application
-
-1. Pull latest changes:
-```bash
-git pull origin main
-```
-
-2. Rebuild and redeploy:
-```bash
-# Build new image
-docker build -t elpan-website:latest .
-
-# Stop and remove old container
-docker stop elpan-website
-docker rm elpan-website
-
-# Run new container
-docker run -d \
-  --name elpan-website \
-  -p 80:80 \
-  -p 443:443 \
-  -v letsencrypt:/etc/letsencrypt \
-  --restart unless-stopped \
-  elpan-website:latest
-```
-
-## SSL Management
-
-### Automatic SSL Setup
-- SSL certificates are automatically obtained during first deployment
-- Renewal is checked daily via cron job
-
-### Manual SSL Operations
-```bash
-# Check certificate status
-docker exec elpan-website certbot certificates
-
-# Force renewal
-docker exec elpan-website certbot renew --force-renewal
-
-# Backup certificates
-docker cp elpan-website:/etc/letsencrypt ./letsencrypt-backup
-```
-
-## Maintenance
-
-### Monitoring
-
-1. Container Status:
-```bash
-# View container status
-docker ps -a | grep elpan-website
+# Restart containers
+sudo docker compose restart
 
 # View logs
-docker logs elpan-website
+sudo docker compose logs
 
-# Follow logs in real-time
-docker logs -f elpan-website
+# View logs for specific service
+sudo docker compose logs frontend
+sudo docker compose logs backend
+
+# Follow logs (real-time)
+sudo docker compose logs -f
 ```
 
-2. Resource Usage:
+#### Maintenance Operations
 ```bash
-# Monitor container resources
-docker stats elpan-website
+# Rebuild containers after changes
+sudo docker compose up --build -d
+
+# Remove all containers and volumes
+sudo docker compose down -v
+
+# Check container status
+sudo docker compose ps
+
+# Execute command in container
+sudo docker compose exec backend sh
+sudo docker compose exec frontend sh
 ```
 
-3. Nginx Logs:
+#### Update Deployment
 ```bash
-# Access logs
-docker exec elpan-website tail -f /var/log/nginx/access.log
+# Pull latest code
+git pull
 
-# Error logs
-docker exec elpan-website tail -f /var/log/nginx/error.log
+# Rebuild and restart containers
+sudo docker compose down
+sudo docker compose up --build -d
 ```
 
-### Backup Procedures
+## Direct Server Deployment
 
-1. SSL Certificates:
-```bash
-# Create backup directory
-mkdir -p backups/ssl
-docker cp elpan-website:/etc/letsencrypt ./backups/ssl/
+### Frontend Deployment
+1. Build the frontend:
+   ```bash
+   cd elpan-website
+   npm install
+   npm run build
+   ```
+
+2. Configure Nginx:
+   ```bash
+   # Copy the built files to Nginx directory
+   sudo cp -r build/* /var/www/elpan.in/
+
+   # Copy and modify Nginx configuration
+   sudo cp nginx.conf /etc/nginx/sites-available/elpan.in
+   sudo ln -s /etc/nginx/sites-available/elpan.in /etc/nginx/sites-enabled/
+   
+   # Test and restart Nginx
+   sudo nginx -t
+   sudo systemctl restart nginx
+   ```
+
+### Backend Deployment
+1. Set up the backend:
+   ```bash
+   cd server
+   npm install
+   
+   # Create and edit environment variables
+   cp .env.example .env
+   nano .env
+   ```
+
+2. Run with PM2 (recommended for production):
+   ```bash
+   # Install PM2 globally
+   npm install -g pm2
+   
+   # Start the backend
+   pm2 start index.js --name elpan-backend
+   
+   # Enable startup script
+   pm2 startup
+   pm2 save
+   ```
+
+## Environment Variables
+Create `server/.env` with the following variables:
+```env
+PORT=3001
+EMAIL_USER=your-email@gmail.com
+EMAIL_PASSWORD=your-app-specific-password
+ADMIN_EMAIL=admin@elpan.in
 ```
 
-2. Configuration:
+## Common Operations
+
+### SSL Certificate Renewal
 ```bash
-# Backup nginx configuration
-docker cp elpan-website:/etc/nginx/conf.d/default.conf ./backups/nginx.conf
+# For Docker deployment
+sudo docker compose down
+sudo certbot renew
+sudo docker compose up -d
+
+# For direct deployment
+sudo certbot renew
+sudo systemctl restart nginx
+```
+
+### Updating the Website
+```bash
+# Pull latest changes
+git pull origin main
+
+# For Docker deployment
+sudo docker compose up --build -d
+
+# For direct deployment
+npm run build
+sudo cp -r build/* /var/www/elpan.in/
+cd server
+pm2 restart elpan-backend
 ```
 
 ## Troubleshooting
 
-### Common Issues and Solutions
+### CORS Issues
+1. Check the backend logs for the request origin:
+   ```bash
+   sudo docker compose logs backend
+   # or
+   pm2 logs elpan-backend
+   ```
 
-1. Site Not Accessible
+2. Add new origins to the allowedOrigins array in `server/index.js`
+
+### Email Sending Issues
+1. Verify SMTP settings in `.env`
+2. Check backend logs for SMTP errors
+3. Ensure Gmail "Less secure app access" is enabled or using App Password
+
+### 404 Errors
+1. Check nginx configuration
+2. Verify API endpoints in frontend code
+3. Ensure services are running:
+   ```bash
+   # Docker
+   sudo docker compose ps
+   
+   # Direct deployment
+   sudo systemctl status nginx
+   pm2 status
+   ```
+
+### Container Issues
 ```bash
-# Check if container is running
-docker ps | grep elpan-website
+# Remove all containers and volumes (fresh start)
+sudo docker compose down -v
+sudo docker system prune -a
+sudo docker compose up --build -d
 
-# Check nginx configuration
-docker exec elpan-website nginx -t
-
-# Check nginx logs
-docker exec elpan-website tail -f /var/log/nginx/error.log
+# Check container logs
+sudo docker compose logs -f
 ```
 
-2. SSL Certificate Issues
-```bash
-# Verify certificate existence
-docker exec elpan-website ls -la /etc/letsencrypt/live/
-
-# Check certbot logs
-docker exec elpan-website certbot certificates
-```
-
-3. Performance Issues
-```bash
-# Check resource usage
-docker stats elpan-website
-
-# Monitor nginx access patterns
-docker exec elpan-website tail -f /var/log/nginx/access.log
-```
-
-## Security Best Practices
-
-1. Regular Updates
-```bash
-# Update base images
-docker pull nginx:alpine
-docker pull node:18-alpine
-
-# Rebuild application with updates
-docker build --no-cache -t elpan-website:latest .
-```
-
-2. Security Headers
-- Implemented in nginx.conf:
-  - HSTS
-  - XSS Protection
-  - Content Security Policy
-  - Frame Options
-  - Referrer Policy
-
-3. SSL Configuration
-- TLS 1.2 and 1.3 only
-- Strong cipher suite
-- Regular certificate renewal
-
-4. Access Control
-```bash
-# Review nginx access logs for suspicious activity
-docker exec elpan-website tail -f /var/log/nginx/access.log | grep -i "error\|warn"
-```
-
-## Production Optimizations
-
-1. Cache Configuration
-- Static files cached for 1 year
-- Cache-Control headers set
-- Gzip compression enabled
-
-2. Performance Monitoring
-```bash
-# Monitor response times
-docker exec elpan-website tail -f /var/log/nginx/access.log | awk '{print $NF}'
-```
-
-## Contact & Support
-- Technical Support: [your-email]
-- Emergency Contact: [emergency-contact]
-- Documentation Updates: [docs-repo-url]
-
-## License
-[Your License Information]
+For additional support or issues, please contact the development team or create an issue in the repository.
